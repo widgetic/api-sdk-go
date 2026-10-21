@@ -1,0 +1,139 @@
+# CreateEditorSessionRequest
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Surfaces** | **[]string** | The pieces of Widgetic&#39;s editor the session may drive. &#x60;files&#x60; is the media library (the File Browser: upload a file, list the files uploaded for this user); what a user uploads is kept in your own storage destination. Partner storage is not optional: a session of any surface can be made only once you have set a destination up (&#x60;setPartnerStorageDestination&#x60;), and is refused with &#x60;409 PARTNER_STORAGE_REQUIRED&#x60; until then. &#x60;editor&#x60; is editing one of this user&#39;s compositions: read it, change its name, content, design and embed settings, read its schemas, and ask where to show it (&#x60;getCompositionPreview&#x60;: the widget&#39;s published page). &#x60;creator&#x60; is Widgetic&#39;s widget creator, with its drawing canvas and its AI: this user&#39;s canvases, the widgets on them and the conversation of each widget, the generation, build and publish calls that make a widget, and the compositions of those widgets (list, make). The surfaces do not imply one another: the whole creator also saves a composition (&#x60;editor&#x60;) and attaches pictures to its chat (&#x60;files&#x60;), so ask for &#x60;[\&quot;creator\&quot;, \&quot;editor\&quot;, \&quot;files\&quot;]&#x60;.  | 
+**ExpiresInSeconds** | Pointer to **int32** | How long the session lasts, in seconds. It cannot be extended; make a new session when it ends. | [optional] [default to 3600]
+**AllowedOrigin** | Pointer to **NullableString** | Bind the session to one web page origin, such as &#x60;https://app.example.com&#x60; (no path; &#x60;http&#x60; is accepted only for &#x60;localhost&#x60;). The session is then refused from any other origin, and from a request that carries no &#x60;Origin&#x60; header. Leave it out for a session that can be used from anywhere, which is what a server-side caller needs.  | [optional] 
+**MaxCredits** | Pointer to **int32** | The most credits this session may spend on Widgetic&#39;s AI, one credit being one generation. Once the operations it ran have taken that many, the next one is refused (402, &#x60;EDITOR_SESSION_CREDIT_LIMIT_REACHED&#x60;) and the browser is only told that the feature is not available right now. A generation that fails is refunded and does not count. Leave it out to get the limit Widgetic has set for your account, if it has set one (it sets none unless you ask), and otherwise no limit of its own, which leaves the credits of your account as the only ceiling. Send &#x60;null&#x60; to ask for no limit of its own even when a default is set.  | [optional] 
+
+## Methods
+
+### NewCreateEditorSessionRequest
+
+`func NewCreateEditorSessionRequest(surfaces []string, ) *CreateEditorSessionRequest`
+
+NewCreateEditorSessionRequest instantiates a new CreateEditorSessionRequest object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewCreateEditorSessionRequestWithDefaults
+
+`func NewCreateEditorSessionRequestWithDefaults() *CreateEditorSessionRequest`
+
+NewCreateEditorSessionRequestWithDefaults instantiates a new CreateEditorSessionRequest object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetSurfaces
+
+`func (o *CreateEditorSessionRequest) GetSurfaces() []string`
+
+GetSurfaces returns the Surfaces field if non-nil, zero value otherwise.
+
+### GetSurfacesOk
+
+`func (o *CreateEditorSessionRequest) GetSurfacesOk() (*[]string, bool)`
+
+GetSurfacesOk returns a tuple with the Surfaces field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSurfaces
+
+`func (o *CreateEditorSessionRequest) SetSurfaces(v []string)`
+
+SetSurfaces sets Surfaces field to given value.
+
+
+### GetExpiresInSeconds
+
+`func (o *CreateEditorSessionRequest) GetExpiresInSeconds() int32`
+
+GetExpiresInSeconds returns the ExpiresInSeconds field if non-nil, zero value otherwise.
+
+### GetExpiresInSecondsOk
+
+`func (o *CreateEditorSessionRequest) GetExpiresInSecondsOk() (*int32, bool)`
+
+GetExpiresInSecondsOk returns a tuple with the ExpiresInSeconds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExpiresInSeconds
+
+`func (o *CreateEditorSessionRequest) SetExpiresInSeconds(v int32)`
+
+SetExpiresInSeconds sets ExpiresInSeconds field to given value.
+
+### HasExpiresInSeconds
+
+`func (o *CreateEditorSessionRequest) HasExpiresInSeconds() bool`
+
+HasExpiresInSeconds returns a boolean if a field has been set.
+
+### GetAllowedOrigin
+
+`func (o *CreateEditorSessionRequest) GetAllowedOrigin() string`
+
+GetAllowedOrigin returns the AllowedOrigin field if non-nil, zero value otherwise.
+
+### GetAllowedOriginOk
+
+`func (o *CreateEditorSessionRequest) GetAllowedOriginOk() (*string, bool)`
+
+GetAllowedOriginOk returns a tuple with the AllowedOrigin field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAllowedOrigin
+
+`func (o *CreateEditorSessionRequest) SetAllowedOrigin(v string)`
+
+SetAllowedOrigin sets AllowedOrigin field to given value.
+
+### HasAllowedOrigin
+
+`func (o *CreateEditorSessionRequest) HasAllowedOrigin() bool`
+
+HasAllowedOrigin returns a boolean if a field has been set.
+
+### SetAllowedOriginNil
+
+`func (o *CreateEditorSessionRequest) SetAllowedOriginNil(b bool)`
+
+ SetAllowedOriginNil sets the value for AllowedOrigin to be an explicit nil
+
+### UnsetAllowedOrigin
+`func (o *CreateEditorSessionRequest) UnsetAllowedOrigin()`
+
+UnsetAllowedOrigin ensures that no value is present for AllowedOrigin, not even an explicit nil
+### GetMaxCredits
+
+`func (o *CreateEditorSessionRequest) GetMaxCredits() int32`
+
+GetMaxCredits returns the MaxCredits field if non-nil, zero value otherwise.
+
+### GetMaxCreditsOk
+
+`func (o *CreateEditorSessionRequest) GetMaxCreditsOk() (*int32, bool)`
+
+GetMaxCreditsOk returns a tuple with the MaxCredits field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMaxCredits
+
+`func (o *CreateEditorSessionRequest) SetMaxCredits(v int32)`
+
+SetMaxCredits sets MaxCredits field to given value.
+
+### HasMaxCredits
+
+`func (o *CreateEditorSessionRequest) HasMaxCredits() bool`
+
+HasMaxCredits returns a boolean if a field has been set.
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
