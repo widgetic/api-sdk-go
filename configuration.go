@@ -92,16 +92,16 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader:    make(map[string]string),
-		UserAgent:        "OpenAPI-Generator/1.11.66/go",
+		UserAgent:        "OpenAPI-Generator/1.11.111/go",
 		Debug:            false,
 		Servers:          ServerConfigurations{
 			{
 				URL: "https://api.widgetic.com/v1",
-				Description: "Development server",
+				Description: "Production server",
 				Variables: map[string]ServerVariable{
 					"env": ServerVariable{
 						Description: "Environment",
-						DefaultValue: "development",
+						DefaultValue: "production",
 					},
 					"apiUrl": ServerVariable{
 						Description: "API URL",
@@ -139,7 +139,31 @@ func NewConfiguration() *Configuration {
 					Description: "The public embed routes are served at the root of the API host, not under /v1.",
 				},
 			},
+			"PartnerAPIService.GetPublicWorkflow": {
+				{
+					URL: "https://api.widgetic.com",
+					Description: "The public embed routes are served at the root of the API host, not under /v1.",
+				},
+			},
+			"PartnerAPIService.GetPublicWorkflowFrame": {
+				{
+					URL: "https://api.widgetic.com",
+					Description: "The public embed routes are served at the root of the API host, not under /v1.",
+				},
+			},
+			"PartnerAPIService.GetPublicWorkflowVersion": {
+				{
+					URL: "https://api.widgetic.com",
+					Description: "The public embed routes are served at the root of the API host, not under /v1.",
+				},
+			},
 			"PartnerAPIService.PostPublicCompositionEmbedStatus": {
+				{
+					URL: "https://api.widgetic.com",
+					Description: "The public embed routes are served at the root of the API host, not under /v1.",
+				},
+			},
+			"PartnerAPIService.ReportPublicWorkflowEvents": {
 				{
 					URL: "https://api.widgetic.com",
 					Description: "The public embed routes are served at the root of the API host, not under /v1.",
@@ -175,7 +199,31 @@ func NewConfiguration() *Configuration {
 					Description: "The public embed routes are served at the root of the API host, not under /v1.",
 				},
 			},
+			"PublicEmbedAPIService.GetPublicWorkflowFrame": {
+				{
+					URL: "https://api.widgetic.com",
+					Description: "The public embed routes are served at the root of the API host, not under /v1.",
+				},
+			},
+			"PublicEmbedAPIService.GetPublicWorkflowVersion": {
+				{
+					URL: "https://api.widgetic.com",
+					Description: "The public embed routes are served at the root of the API host, not under /v1.",
+				},
+			},
+			"PublicEmbedAPIService.GetPublicWorkflow": {
+				{
+					URL: "https://api.widgetic.com",
+					Description: "The public embed routes are served at the root of the API host, not under /v1.",
+				},
+			},
 			"PublicEmbedAPIService.PostPublicCompositionEmbedStatus": {
+				{
+					URL: "https://api.widgetic.com",
+					Description: "The public embed routes are served at the root of the API host, not under /v1.",
+				},
+			},
+			"PublicEmbedAPIService.ReportPublicWorkflowEvents": {
 				{
 					URL: "https://api.widgetic.com",
 					Description: "The public embed routes are served at the root of the API host, not under /v1.",

@@ -22,6 +22,22 @@ func Test_widgetic_PartnersAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test PartnersAPIService ConfirmPartnerAdapterConnection", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var partnerId string
+		var adapterId string
+		var credentialKey string
+
+		resp, httpRes, err := apiClient.PartnersAPI.ConfirmPartnerAdapterConnection_0(context.Background(), partnerId, adapterId, credentialKey).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnersAPIService CreatePartnerExtraCreditsInvoice", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -300,6 +316,20 @@ func Test_widgetic_PartnersAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PartnersAPIService ListPartnerWorkflowPresets", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var partnerId string
+
+		resp, httpRes, err := apiClient.PartnersAPI.ListPartnerWorkflowPresets_0(context.Background(), partnerId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnersAPIService RemovePartnerAdapterConnection", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -352,6 +382,21 @@ func Test_widgetic_PartnersAPIService(t *testing.T) {
 		var partnerId string
 
 		resp, httpRes, err := apiClient.PartnersAPI.RemovePartnerStorageDestination_0(context.Background(), partnerId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnersAPIService RemovePartnerWorkflowPreset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var partnerId string
+		var key string
+
+		resp, httpRes, err := apiClient.PartnersAPI.RemovePartnerWorkflowPreset_0(context.Background(), partnerId, key).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -482,6 +527,21 @@ func Test_widgetic_PartnersAPIService(t *testing.T) {
 		var partnerId string
 
 		resp, httpRes, err := apiClient.PartnersAPI.SetPartnerStorageDestination_0(context.Background(), partnerId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnersAPIService SetPartnerWorkflowPreset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var partnerId string
+		var key string
+
+		resp, httpRes, err := apiClient.PartnersAPI.SetPartnerWorkflowPreset_0(context.Background(), partnerId, key).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

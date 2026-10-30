@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Credential** | **string** | The key exactly as its provider gave it: one line of text, at most 2048 characters. It is stored encrypted and is never returned or logged. | 
+**Credential** | **string** | The key exactly as its provider gave it: one line of text, at most 2048 characters. It is stored encrypted and is never returned or logged. For a credential that is an email address (&#x60;confirmation: email_code&#x60;), write that one address, with nothing else | 
 
 ## Methods
 

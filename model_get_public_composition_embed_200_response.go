@@ -24,12 +24,14 @@ type GetPublicCompositionEmbed200Response struct {
 	Version *int32 `json:"version,omitempty"`
 	// Published widget version on the CDN artifact this composition uses.
 	WidgetVersion *int32 `json:"widgetVersion,omitempty"`
-	// Version of the player: the gateway frame wrapper that shows the widget, and the host bridge it speaks with the embedding page and the widget (currently 4). Raised when the messages between page, frame, and widget change in a way a widget could notice, such as a new `widgetic:host` field or a new forwarded event (2 added `entries`, 3 added `adapters`, 4 added `entries.writeToken`). It is not `widgetVersion` (the version of the published widget) and not the `version` inside a `widgetic:host` message.
+	// Version of the player: the gateway frame wrapper that shows the widget, and the host bridge it speaks with the embedding page and the widget (currently 6). Raised when the messages between page, frame, and widget change in a way a widget could notice, such as a new `widgetic:host` field or a new forwarded event (2 added `entries`, 3 added `adapters`, 4 added `entries.writeToken`, 5 added the A/B goal: `widgetic:ab-goal` to the widget and `widgetic:goal` back, 6 added the watch of a workflow: `widgetic:workflow-watch` to the widget, the watched values in `widgetic:submitted` and the watched action in `widgetic:goal`). It is not `widgetVersion` (the version of the published widget) and not the `version` inside a `widgetic:host` message.
 	PlayerVersion *int32 `json:"playerVersion,omitempty"`
 	DataSource NullableGetPublicCompositionEmbed200ResponseDataSource `json:"dataSource,omitempty"`
 	EmbedUrl *string `json:"embedUrl,omitempty"`
 	// Signed per-composition write token for `POST /embed/compositions/{compositionId}/entries/{table}`, also handed to the widget inside `widgetic:host` as `entries.writeToken`.
 	EntryWriteToken *string `json:"entryWriteToken,omitempty"`
+	Entries *GetPublicCompositionEmbed200ResponseEntries `json:"entries,omitempty"`
+	Adapters *GetPublicCompositionEmbed200ResponseAdapters `json:"adapters,omitempty"`
 	Width *int32 `json:"width,omitempty"`
 	Height *int32 `json:"height,omitempty"`
 	Design map[string]interface{} `json:"design,omitempty"`
@@ -37,6 +39,7 @@ type GetPublicCompositionEmbed200Response struct {
 	ContentItems []map[string]interface{} `json:"contentItems,omitempty"`
 	// The browser features the widget needs the iframe that shows it to be allowed to use, as the value of that iframe's `allow` attribute (for example `camera; microphone`; the words are `camera`, `display-capture` and `microphone`). Present only for a widget that uses a module that needs one, and absent for every other widget. A page that embeds the frame itself copies it onto its own iframe (`allow=\"...\"`); a page that does not leaves the widget to say, in its own words, that the feature is blocked there. The frame wrapper already passes it on to the iframe it holds.
 	IframeAllow *string `json:"iframeAllow,omitempty"`
+	Media *GetPublicCompositionEmbed200ResponseMedia `json:"media,omitempty"`
 	Direct NullableGetPublicCompositionEmbed200ResponseDirect `json:"direct,omitempty"`
 }
 
@@ -323,6 +326,70 @@ func (o *GetPublicCompositionEmbed200Response) SetEntryWriteToken(v string) {
 	o.EntryWriteToken = &v
 }
 
+// GetEntries returns the Entries field value if set, zero value otherwise.
+func (o *GetPublicCompositionEmbed200Response) GetEntries() GetPublicCompositionEmbed200ResponseEntries {
+	if o == nil || IsNil(o.Entries) {
+		var ret GetPublicCompositionEmbed200ResponseEntries
+		return ret
+	}
+	return *o.Entries
+}
+
+// GetEntriesOk returns a tuple with the Entries field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetPublicCompositionEmbed200Response) GetEntriesOk() (*GetPublicCompositionEmbed200ResponseEntries, bool) {
+	if o == nil || IsNil(o.Entries) {
+		return nil, false
+	}
+	return o.Entries, true
+}
+
+// HasEntries returns a boolean if a field has been set.
+func (o *GetPublicCompositionEmbed200Response) HasEntries() bool {
+	if o != nil && !IsNil(o.Entries) {
+		return true
+	}
+
+	return false
+}
+
+// SetEntries gets a reference to the given GetPublicCompositionEmbed200ResponseEntries and assigns it to the Entries field.
+func (o *GetPublicCompositionEmbed200Response) SetEntries(v GetPublicCompositionEmbed200ResponseEntries) {
+	o.Entries = &v
+}
+
+// GetAdapters returns the Adapters field value if set, zero value otherwise.
+func (o *GetPublicCompositionEmbed200Response) GetAdapters() GetPublicCompositionEmbed200ResponseAdapters {
+	if o == nil || IsNil(o.Adapters) {
+		var ret GetPublicCompositionEmbed200ResponseAdapters
+		return ret
+	}
+	return *o.Adapters
+}
+
+// GetAdaptersOk returns a tuple with the Adapters field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetPublicCompositionEmbed200Response) GetAdaptersOk() (*GetPublicCompositionEmbed200ResponseAdapters, bool) {
+	if o == nil || IsNil(o.Adapters) {
+		return nil, false
+	}
+	return o.Adapters, true
+}
+
+// HasAdapters returns a boolean if a field has been set.
+func (o *GetPublicCompositionEmbed200Response) HasAdapters() bool {
+	if o != nil && !IsNil(o.Adapters) {
+		return true
+	}
+
+	return false
+}
+
+// SetAdapters gets a reference to the given GetPublicCompositionEmbed200ResponseAdapters and assigns it to the Adapters field.
+func (o *GetPublicCompositionEmbed200Response) SetAdapters(v GetPublicCompositionEmbed200ResponseAdapters) {
+	o.Adapters = &v
+}
+
 // GetWidth returns the Width field value if set, zero value otherwise.
 func (o *GetPublicCompositionEmbed200Response) GetWidth() int32 {
 	if o == nil || IsNil(o.Width) {
@@ -515,6 +582,38 @@ func (o *GetPublicCompositionEmbed200Response) SetIframeAllow(v string) {
 	o.IframeAllow = &v
 }
 
+// GetMedia returns the Media field value if set, zero value otherwise.
+func (o *GetPublicCompositionEmbed200Response) GetMedia() GetPublicCompositionEmbed200ResponseMedia {
+	if o == nil || IsNil(o.Media) {
+		var ret GetPublicCompositionEmbed200ResponseMedia
+		return ret
+	}
+	return *o.Media
+}
+
+// GetMediaOk returns a tuple with the Media field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetPublicCompositionEmbed200Response) GetMediaOk() (*GetPublicCompositionEmbed200ResponseMedia, bool) {
+	if o == nil || IsNil(o.Media) {
+		return nil, false
+	}
+	return o.Media, true
+}
+
+// HasMedia returns a boolean if a field has been set.
+func (o *GetPublicCompositionEmbed200Response) HasMedia() bool {
+	if o != nil && !IsNil(o.Media) {
+		return true
+	}
+
+	return false
+}
+
+// SetMedia gets a reference to the given GetPublicCompositionEmbed200ResponseMedia and assigns it to the Media field.
+func (o *GetPublicCompositionEmbed200Response) SetMedia(v GetPublicCompositionEmbed200ResponseMedia) {
+	o.Media = &v
+}
+
 // GetDirect returns the Direct field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *GetPublicCompositionEmbed200Response) GetDirect() GetPublicCompositionEmbed200ResponseDirect {
 	if o == nil || IsNil(o.Direct.Get()) {
@@ -591,6 +690,12 @@ func (o GetPublicCompositionEmbed200Response) ToMap() (map[string]interface{}, e
 	if !IsNil(o.EntryWriteToken) {
 		toSerialize["entryWriteToken"] = o.EntryWriteToken
 	}
+	if !IsNil(o.Entries) {
+		toSerialize["entries"] = o.Entries
+	}
+	if !IsNil(o.Adapters) {
+		toSerialize["adapters"] = o.Adapters
+	}
 	if !IsNil(o.Width) {
 		toSerialize["width"] = o.Width
 	}
@@ -608,6 +713,9 @@ func (o GetPublicCompositionEmbed200Response) ToMap() (map[string]interface{}, e
 	}
 	if !IsNil(o.IframeAllow) {
 		toSerialize["iframeAllow"] = o.IframeAllow
+	}
+	if !IsNil(o.Media) {
+		toSerialize["media"] = o.Media
 	}
 	if o.Direct.IsSet() {
 		toSerialize["direct"] = o.Direct.Get()

@@ -5,6 +5,7 @@ All URIs are relative to *https://api.widgetic.com/v1*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**AddPersonalWorkspaceDomain_0**](UsersAPI.md#AddPersonalWorkspaceDomain_0) | **Post** /users/{id}/workspace/domains | Allow a website to show your widgets
+[**ConfirmUserAdapterConnection_0**](UsersAPI.md#ConfirmUserAdapterConnection_0) | **Post** /users/{userId}/adapter-connections/{adapterId}/{credentialKey}/confirm | Confirm an adapter address with the code that was emailed to it
 [**CreateUserApiKey_0**](UsersAPI.md#CreateUserApiKey_0) | **Post** /users/{id}/keys | Create an API key
 [**DeletePersonalWorkspaceDomain_0**](UsersAPI.md#DeletePersonalWorkspaceDomain_0) | **Delete** /users/{id}/workspace/domains/{domainId} | Stop allowing a website to show your widgets
 [**DeleteUserApiKey_0**](UsersAPI.md#DeleteUserApiKey_0) | **Delete** /users/{id}/keys/{keyId} | Delete an API key
@@ -76,6 +77,84 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PersonalWorkspaceDomainResultResponse**](PersonalWorkspaceDomainResultResponse.md)
+
+### Authorization
+
+[apiKeyAuth](../README.md#apiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ConfirmUserAdapterConnection_0
+
+> SetUserAdapterConnection200Response ConfirmUserAdapterConnection_0(ctx, userId, adapterId, credentialKey).ConfirmAdapterConnectionRequest(confirmAdapterConnectionRequest).Execute()
+
+Confirm an adapter address with the code that was emailed to it
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/widgetic/api-sdk-go"
+)
+
+func main() {
+	userId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | The account that keeps the address. For your own, your own user id
+	adapterId := "adapterId_example" // string | The adapter the address is for
+	credentialKey := "credentialKey_example" // string | The credential's name within the adapter
+	confirmAdapterConnectionRequest := *openapiclient.NewConfirmAdapterConnectionRequest("123456") // ConfirmAdapterConnectionRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.UsersAPI.ConfirmUserAdapterConnection_0(context.Background(), userId, adapterId, credentialKey).ConfirmAdapterConnectionRequest(confirmAdapterConnectionRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `UsersAPI.ConfirmUserAdapterConnection_0``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ConfirmUserAdapterConnection_0`: SetUserAdapterConnection200Response
+	fmt.Fprintf(os.Stdout, "Response from `UsersAPI.ConfirmUserAdapterConnection_0`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**userId** | **string** | The account that keeps the address. For your own, your own user id | 
+**adapterId** | **string** | The adapter the address is for | 
+**credentialKey** | **string** | The credential&#39;s name within the adapter | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiConfirmUserAdapterConnectionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+ **confirmAdapterConnectionRequest** | [**ConfirmAdapterConnectionRequest**](ConfirmAdapterConnectionRequest.md) |  | 
+
+### Return type
+
+[**SetUserAdapterConnection200Response**](SetUserAdapterConnection200Response.md)
 
 ### Authorization
 

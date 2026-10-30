@@ -81,11 +81,68 @@ func Test_widgetic_PublicEmbedAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PublicEmbedAPIService GetPublicWorkflowFrame", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PublicEmbedAPI.GetPublicWorkflowFrame_0(context.Background(), workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PublicEmbedAPIService GetPublicWorkflowVersion", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workflowId string
+		var versionId string
+
+		resp, httpRes, err := apiClient.PublicEmbedAPI.GetPublicWorkflowVersion_0(context.Background(), workflowId, versionId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PublicEmbedAPIService GetPublicWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PublicEmbedAPI.GetPublicWorkflow_0(context.Background(), workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PublicEmbedAPIService PostPublicCompositionEmbedStatus", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PublicEmbedAPI.PostPublicCompositionEmbedStatus_0(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PublicEmbedAPIService ReportPublicWorkflowEvents", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PublicEmbedAPI.ReportPublicWorkflowEvents_0(context.Background(), workflowId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

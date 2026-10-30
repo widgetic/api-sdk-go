@@ -21,7 +21,7 @@ var _ MappedNullable = &SetAdapterConnectionRequest{}
 
 // SetAdapterConnectionRequest struct for SetAdapterConnectionRequest
 type SetAdapterConnectionRequest struct {
-	// The key exactly as its provider gave it: one line of text, at most 2048 characters. It is stored encrypted and is never returned or logged.
+	// The key exactly as its provider gave it: one line of text, at most 2048 characters. It is stored encrypted and is never returned or logged. For a credential that is an email address (`confirmation: email_code`), write that one address, with nothing else
 	Credential string `json:"credential"`
 }
 

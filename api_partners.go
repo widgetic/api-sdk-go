@@ -24,6 +24,235 @@ import (
 // PartnersAPIService PartnersAPI service
 type PartnersAPIService service
 
+type ApiConfirmPartnerAdapterConnection_0Request struct {
+	ctx context.Context
+	ApiService *PartnersAPIService
+	partnerId string
+	adapterId string
+	credentialKey string
+	confirmAdapterConnectionRequest *ConfirmAdapterConnectionRequest
+}
+
+func (r ApiConfirmPartnerAdapterConnection_0Request) ConfirmAdapterConnectionRequest(confirmAdapterConnectionRequest ConfirmAdapterConnectionRequest) ApiConfirmPartnerAdapterConnection_0Request {
+	r.confirmAdapterConnectionRequest = &confirmAdapterConnectionRequest
+	return r
+}
+
+func (r ApiConfirmPartnerAdapterConnection_0Request) Execute() (*SetUserAdapterConnection200Response, *http.Response, error) {
+	return r.ApiService.ConfirmPartnerAdapterConnectionExecute(r)
+}
+
+/*
+ConfirmPartnerAdapterConnection_0 Confirm a partner's adapter address with the code that was emailed to it
+
+Some credentials are an email address Widgetic sends a widget's messages to (`confirmation: email_code` in
+`getPartnerAdapterConnections`). Saving one with `setPartnerAdapterConnection` emails a six-digit code to it; this
+gives the code back. Only then is the address used: until it is confirmed, the widgets of the partner's customers
+that need it are not charged and their visitors are told the feature is unavailable.
+
+The code works for 30 minutes and for five wrong tries. After that, save the address again and a new code is
+emailed (not sooner than a minute after the last one). A code that is not made of digits is refused without
+counting as a try.
+
+Confirming an address that is already confirmed answers 200 with the same state, so a retry of a request that
+went through is harmless. Saving a different address, or the same one before it was confirmed, starts again.
+
+This needs an API key with full access. The caller must be the person who administers the partner, or a
+Widgetic administrator.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param partnerId The partner that keeps the address
+ @param adapterId The adapter the address is for
+ @param credentialKey The credential's name within the adapter
+ @return ApiConfirmPartnerAdapterConnection_0Request
+*/
+func (a *PartnersAPIService) ConfirmPartnerAdapterConnection(ctx context.Context, partnerId string, adapterId string, credentialKey string) ApiConfirmPartnerAdapterConnection_0Request {
+	return ApiConfirmPartnerAdapterConnection_0Request{
+		ApiService: a,
+		ctx: ctx,
+		partnerId: partnerId,
+		adapterId: adapterId,
+		credentialKey: credentialKey,
+	}
+}
+
+// Execute executes the request
+//  @return SetUserAdapterConnection200Response
+func (a *PartnersAPIService) ConfirmPartnerAdapterConnectionExecute(r ApiConfirmPartnerAdapterConnection_0Request) (*SetUserAdapterConnection200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SetUserAdapterConnection200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PartnersAPIService.ConfirmPartnerAdapterConnection")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/partners/{partnerId}/adapter-connections/{adapterId}/{credentialKey}/confirm"
+	localVarPath = strings.Replace(localVarPath, "{"+"partnerId"+"}", url.PathEscape(parameterValueToString(r.partnerId, "partnerId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"adapterId"+"}", url.PathEscape(parameterValueToString(r.adapterId, "adapterId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"credentialKey"+"}", url.PathEscape(parameterValueToString(r.credentialKey, "credentialKey")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.adapterId) > 40 {
+		return localVarReturnValue, nil, reportError("adapterId must have less than 40 elements")
+	}
+	if strlen(r.credentialKey) > 40 {
+		return localVarReturnValue, nil, reportError("credentialKey must have less than 40 elements")
+	}
+	if r.confirmAdapterConnectionRequest == nil {
+		return localVarReturnValue, nil, reportError("confirmAdapterConnectionRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.confirmAdapterConnectionRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 503 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreatePartnerExtraCreditsInvoice_0Request struct {
 	ctx context.Context
 	ApiService *PartnersAPIService
@@ -62,8 +291,9 @@ charged to (`getPartnerCreditBalance` shows it). Extra credits **do not expire**
 contract period, which end with it. Nothing is added before the invoice is paid, and an unpaid invoice for
 extra credits never stops the partner: only an unpaid invoice of the contract does (`payment_arrears`).
 
-Allowed whatever the partner's standing: a partner that has run out of credits, or is stopped for an unpaid
-contract invoice, can still buy. No contract is needed.
+Available only to partners that have an active paid contract in force with Widgetic (`NO_PAID_CONTRACT` when
+none is in force) and no overdue contract invoice (`CONTRACT_INVOICE_OVERDUE` while a contract invoice is past
+its due day). A partner that has run out of credits during its period can buy more at the list price.
 
 An `Idempotency-Key` is required, and it is what makes a retry safe: the same key with the same body returns
 the invoice already issued, the same key with a different body is refused with 422, and a duplicate that
@@ -3495,6 +3725,184 @@ func (a *PartnersAPIService) ListPartnerPresetsExecute(r ApiListPartnerPresets_0
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiListPartnerWorkflowPresets_0Request struct {
+	ctx context.Context
+	ApiService *PartnersAPIService
+	partnerId string
+}
+
+func (r ApiListPartnerWorkflowPresets_0Request) Execute() (*ListPartnerWorkflowPresets200Response, *http.Response, error) {
+	return r.ApiService.ListPartnerWorkflowPresetsExecute(r)
+}
+
+/*
+ListPartnerWorkflowPresets_0 List the workflows a partner offers as places to start
+
+The partner's starting points, ordered by `position` and then by `key`: the published workflows it offers its managed
+users when they make a new workflow. Each says whether people can start from it now and, when they cannot, why. The
+list is the same for every managed user, and a managed user is shown only what is available.
+
+A starting point is one of the partner account's own published workflows, built from compositions the account made
+for itself (not for a customer or a team) and from widgets the partner already offers as presets
+(`setPartnerPreset`), and it uses at most 10 widgets. A partner offers up to 50.
+
+The caller must be the person who administers the partner (an API key of that account works), or a Widgetic
+administrator.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param partnerId The partner whose starting points to list
+ @return ApiListPartnerWorkflowPresets_0Request
+*/
+func (a *PartnersAPIService) ListPartnerWorkflowPresets(ctx context.Context, partnerId string) ApiListPartnerWorkflowPresets_0Request {
+	return ApiListPartnerWorkflowPresets_0Request{
+		ApiService: a,
+		ctx: ctx,
+		partnerId: partnerId,
+	}
+}
+
+// Execute executes the request
+//  @return ListPartnerWorkflowPresets200Response
+func (a *PartnersAPIService) ListPartnerWorkflowPresetsExecute(r ApiListPartnerWorkflowPresets_0Request) (*ListPartnerWorkflowPresets200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListPartnerWorkflowPresets200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PartnersAPIService.ListPartnerWorkflowPresets")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/partners/{partnerId}/workflow-presets"
+	localVarPath = strings.Replace(localVarPath, "{"+"partnerId"+"}", url.PathEscape(parameterValueToString(r.partnerId, "partnerId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 503 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiRemovePartnerAdapterConnection_0Request struct {
 	ctx context.Context
 	ApiService *PartnersAPIService
@@ -4119,6 +4527,182 @@ func (a *PartnersAPIService) RemovePartnerStorageDestinationExecute(r ApiRemoveP
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiRemovePartnerWorkflowPreset_0Request struct {
+	ctx context.Context
+	ApiService *PartnersAPIService
+	partnerId string
+	key string
+}
+
+func (r ApiRemovePartnerWorkflowPreset_0Request) Execute() (*RemovePartnerWorkflowPreset200Response, *http.Response, error) {
+	return r.ApiService.RemovePartnerWorkflowPresetExecute(r)
+}
+
+/*
+RemovePartnerWorkflowPreset_0 Stop offering a workflow as a place to start
+
+Removes the starting point under `key`. The workflow itself is not touched, and neither are the workflows people
+already started from it.
+
+Removing a starting point the partner does not offer is not an error: the answer is `removed: false`.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param partnerId The partner whose starting point to remove
+ @param key The key of the starting point to remove
+ @return ApiRemovePartnerWorkflowPreset_0Request
+*/
+func (a *PartnersAPIService) RemovePartnerWorkflowPreset(ctx context.Context, partnerId string, key string) ApiRemovePartnerWorkflowPreset_0Request {
+	return ApiRemovePartnerWorkflowPreset_0Request{
+		ApiService: a,
+		ctx: ctx,
+		partnerId: partnerId,
+		key: key,
+	}
+}
+
+// Execute executes the request
+//  @return RemovePartnerWorkflowPreset200Response
+func (a *PartnersAPIService) RemovePartnerWorkflowPresetExecute(r ApiRemovePartnerWorkflowPreset_0Request) (*RemovePartnerWorkflowPreset200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *RemovePartnerWorkflowPreset200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PartnersAPIService.RemovePartnerWorkflowPreset")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/partners/{partnerId}/workflow-presets/{key}"
+	localVarPath = strings.Replace(localVarPath, "{"+"partnerId"+"}", url.PathEscape(parameterValueToString(r.partnerId, "partnerId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"key"+"}", url.PathEscape(parameterValueToString(r.key, "key")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 503 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -5019,8 +5603,15 @@ off, remove the key here, or revoke it with the provider.
 for an owner only) and that the text is one line of at most 2048 characters. Whether the provider accepts the
 key is not checked here: it shows the first time a widget uses it.
 
-A widget whose adapter has no key connected is not charged and does not run that adapter: its visitors are told
-the feature is unavailable, and the partner is told once a day what to connect.
+**An address that has to be confirmed.** Some credentials are not a key but the email address Widgetic sends a
+widget's messages to (`confirmation: email_code` in `getPartnerAdapterConnections`). Saving one checks that it is
+one email address and emails a six-digit code to it; the answer says `awaitingConfirmation: true`, and nothing is
+sent to the address until the code is given back with `confirmPartnerAdapterConnection`. Saving the same address
+again before it is confirmed emails a new code (not sooner than a minute after the last); saving the address that
+is already confirmed changes nothing. If the code cannot be emailed, nothing is saved.
+
+A widget whose adapter has no key connected, or whose address is not confirmed yet, is not charged and does not
+run that adapter: its visitors are told the feature is unavailable, and the partner is told once a day what to do.
 
 This needs an API key with full access. The caller must be the person who administers the partner, or a
 Widgetic administrator. A retry is harmless: saving the same key twice only refreshes when it was set.
@@ -5997,6 +6588,223 @@ func (a *PartnersAPIService) SetPartnerStorageDestinationExecute(r ApiSetPartner
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 429 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 503 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSetPartnerWorkflowPreset_0Request struct {
+	ctx context.Context
+	ApiService *PartnersAPIService
+	partnerId string
+	key string
+	offerWorkflowPresetRequest *OfferWorkflowPresetRequest
+}
+
+func (r ApiSetPartnerWorkflowPreset_0Request) OfferWorkflowPresetRequest(offerWorkflowPresetRequest OfferWorkflowPresetRequest) ApiSetPartnerWorkflowPreset_0Request {
+	r.offerWorkflowPresetRequest = &offerWorkflowPresetRequest
+	return r
+}
+
+func (r ApiSetPartnerWorkflowPreset_0Request) Execute() (*SetPartnerWorkflowPreset200Response, *http.Response, error) {
+	return r.ApiService.SetPartnerWorkflowPresetExecute(r)
+}
+
+/*
+SetPartnerWorkflowPreset_0 Offer a workflow as a place to start, or replace what a key offers
+
+Offers one of the partner account's own published workflows to its managed users under `key`. If the partner already
+offers something under that key it is replaced, so sending the same request twice is safe. Saving replaces the whole
+starting point: a `title`, `description` or `position` you leave out goes back to its default.
+
+Keys are 1 to 64 characters: lowercase letters, digits, hyphens and underscores, the first a letter or a digit.
+
+A workflow is offered once. What people get is the workflow's live version as it is when they start, so publishing
+the workflow changes what new starts get; workflows people already started are never touched. The offer is
+refused, and `error.details.reason` says why, when the workflow:
+
+- is not the partner account's own (a workflow of a team or of a customer, or of somebody else), or does not exist:
+  404, the same for both;
+- is archived (409 `workflow_archived`), or was never published (409 `workflow_not_published`);
+- shows no composition (422 `workflow_empty`), or a block shows a composition made for a customer or a team
+  (422 `composition_not_own`);
+- chains more than 10 widgets (422 `too_many_widgets`), or a widget that the partner does not offer as a preset
+  (422 `widget_not_preset`; `error.details.widgets` lists them, each with its `id` and `name`, so they can be offered
+  first with `setPartnerPreset`);
+- is already offered under another key (409 `workflow_already_offered`; `error.details.key` says which), or the
+  partner already offers 50 (409 `too_many_presets`).
+
+The caller must be the person who administers the partner (an API key of that account works), or a Widgetic
+administrator, who offers the partner's workflow on its behalf.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param partnerId The partner whose starting point to set
+ @param key The name your code and the picker use for the starting point
+ @return ApiSetPartnerWorkflowPreset_0Request
+*/
+func (a *PartnersAPIService) SetPartnerWorkflowPreset(ctx context.Context, partnerId string, key string) ApiSetPartnerWorkflowPreset_0Request {
+	return ApiSetPartnerWorkflowPreset_0Request{
+		ApiService: a,
+		ctx: ctx,
+		partnerId: partnerId,
+		key: key,
+	}
+}
+
+// Execute executes the request
+//  @return SetPartnerWorkflowPreset200Response
+func (a *PartnersAPIService) SetPartnerWorkflowPresetExecute(r ApiSetPartnerWorkflowPreset_0Request) (*SetPartnerWorkflowPreset200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SetPartnerWorkflowPreset200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "PartnersAPIService.SetPartnerWorkflowPreset")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/partners/{partnerId}/workflow-presets/{key}"
+	localVarPath = strings.Replace(localVarPath, "{"+"partnerId"+"}", url.PathEscape(parameterValueToString(r.partnerId, "partnerId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"key"+"}", url.PathEscape(parameterValueToString(r.key, "key")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.offerWorkflowPresetRequest == nil {
+		return localVarReturnValue, nil, reportError("offerWorkflowPresetRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.offerWorkflowPresetRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
 			var v ErrorResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

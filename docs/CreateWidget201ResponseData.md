@@ -20,8 +20,7 @@ Name | Type | Description | Notes
 **RepoId** | Pointer to **NullableString** | Repository identifier for source code. | [optional] 
 **DatabaseId** | Pointer to **NullableString** | Legacy. The name of a Neon database that an earlier version made for this widget. A widget has no database now (what the visitors of a composition leave is kept in the tables of that composition), so widgets made now have none. | [optional] 
 **Version** | Pointer to **NullableFloat32** | Version number of the widget. | [optional] 
-**CpgSchemaId** | Pointer to **NullableString** | ID linking to the widget&#39;s code graph schema. | [optional] 
-**LastCpgCommitSha** | Pointer to **NullableString** | Last Git commit SHA analyzed for code graph. | [optional] 
+**LastCommitSha** | Pointer to **NullableString** | Latest Git commit SHA of the widget&#39;s code repository. | [optional] 
 **OrganizationId** | Pointer to **NullableString** | Organization ID if created in an organization workspace. | [optional] 
 **ProjectFolder** | Pointer to **NullableString** | Project folder reference for organization widgets. | [optional] 
 **WorkspaceType** | Pointer to **NullableString** | Workspace type when created. | [optional] 
@@ -517,76 +516,41 @@ HasVersion returns a boolean if a field has been set.
 `func (o *CreateWidget201ResponseData) UnsetVersion()`
 
 UnsetVersion ensures that no value is present for Version, not even an explicit nil
-### GetCpgSchemaId
+### GetLastCommitSha
 
-`func (o *CreateWidget201ResponseData) GetCpgSchemaId() string`
+`func (o *CreateWidget201ResponseData) GetLastCommitSha() string`
 
-GetCpgSchemaId returns the CpgSchemaId field if non-nil, zero value otherwise.
+GetLastCommitSha returns the LastCommitSha field if non-nil, zero value otherwise.
 
-### GetCpgSchemaIdOk
+### GetLastCommitShaOk
 
-`func (o *CreateWidget201ResponseData) GetCpgSchemaIdOk() (*string, bool)`
+`func (o *CreateWidget201ResponseData) GetLastCommitShaOk() (*string, bool)`
 
-GetCpgSchemaIdOk returns a tuple with the CpgSchemaId field if it's non-nil, zero value otherwise
+GetLastCommitShaOk returns a tuple with the LastCommitSha field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetCpgSchemaId
+### SetLastCommitSha
 
-`func (o *CreateWidget201ResponseData) SetCpgSchemaId(v string)`
+`func (o *CreateWidget201ResponseData) SetLastCommitSha(v string)`
 
-SetCpgSchemaId sets CpgSchemaId field to given value.
+SetLastCommitSha sets LastCommitSha field to given value.
 
-### HasCpgSchemaId
+### HasLastCommitSha
 
-`func (o *CreateWidget201ResponseData) HasCpgSchemaId() bool`
+`func (o *CreateWidget201ResponseData) HasLastCommitSha() bool`
 
-HasCpgSchemaId returns a boolean if a field has been set.
+HasLastCommitSha returns a boolean if a field has been set.
 
-### SetCpgSchemaIdNil
+### SetLastCommitShaNil
 
-`func (o *CreateWidget201ResponseData) SetCpgSchemaIdNil(b bool)`
+`func (o *CreateWidget201ResponseData) SetLastCommitShaNil(b bool)`
 
- SetCpgSchemaIdNil sets the value for CpgSchemaId to be an explicit nil
+ SetLastCommitShaNil sets the value for LastCommitSha to be an explicit nil
 
-### UnsetCpgSchemaId
-`func (o *CreateWidget201ResponseData) UnsetCpgSchemaId()`
+### UnsetLastCommitSha
+`func (o *CreateWidget201ResponseData) UnsetLastCommitSha()`
 
-UnsetCpgSchemaId ensures that no value is present for CpgSchemaId, not even an explicit nil
-### GetLastCpgCommitSha
-
-`func (o *CreateWidget201ResponseData) GetLastCpgCommitSha() string`
-
-GetLastCpgCommitSha returns the LastCpgCommitSha field if non-nil, zero value otherwise.
-
-### GetLastCpgCommitShaOk
-
-`func (o *CreateWidget201ResponseData) GetLastCpgCommitShaOk() (*string, bool)`
-
-GetLastCpgCommitShaOk returns a tuple with the LastCpgCommitSha field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetLastCpgCommitSha
-
-`func (o *CreateWidget201ResponseData) SetLastCpgCommitSha(v string)`
-
-SetLastCpgCommitSha sets LastCpgCommitSha field to given value.
-
-### HasLastCpgCommitSha
-
-`func (o *CreateWidget201ResponseData) HasLastCpgCommitSha() bool`
-
-HasLastCpgCommitSha returns a boolean if a field has been set.
-
-### SetLastCpgCommitShaNil
-
-`func (o *CreateWidget201ResponseData) SetLastCpgCommitShaNil(b bool)`
-
- SetLastCpgCommitShaNil sets the value for LastCpgCommitSha to be an explicit nil
-
-### UnsetLastCpgCommitSha
-`func (o *CreateWidget201ResponseData) UnsetLastCpgCommitSha()`
-
-UnsetLastCpgCommitSha ensures that no value is present for LastCpgCommitSha, not even an explicit nil
+UnsetLastCommitSha ensures that no value is present for LastCommitSha, not even an explicit nil
 ### GetOrganizationId
 
 `func (o *CreateWidget201ResponseData) GetOrganizationId() string`

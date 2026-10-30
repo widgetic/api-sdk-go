@@ -52,6 +52,9 @@ type Composition struct {
 	ManagedUserId NullableString `json:"managedUserId,omitempty"`
 	// Whether the widget the composition is made from is drawn straight into the page, without a frame (`true`), or inside a frame (`false`). `null` when the widget has no published version yet. It is a fact about the widget's published version, so every composition of one widget answers the same, and it changes when you publish another version. It cannot be set. Only `getCompositionById` returns it: the other calls that return a composition leave it out, and so does that one on the rare occasion the answer could not be worked out just then (ask again). 
 	Direct NullableBool `json:"direct,omitempty"`
+	LastEditedBy NullableCompositionLastEditedBy `json:"lastEditedBy,omitempty"`
+	// When that latest change was made. Present whenever `lastEditedBy` is.
+	LastEditedAt NullableTime `json:"lastEditedAt,omitempty"`
 }
 
 type _Composition Composition
@@ -517,6 +520,90 @@ func (o *Composition) UnsetDirect() {
 	o.Direct.Unset()
 }
 
+// GetLastEditedBy returns the LastEditedBy field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Composition) GetLastEditedBy() CompositionLastEditedBy {
+	if o == nil || IsNil(o.LastEditedBy.Get()) {
+		var ret CompositionLastEditedBy
+		return ret
+	}
+	return *o.LastEditedBy.Get()
+}
+
+// GetLastEditedByOk returns a tuple with the LastEditedBy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Composition) GetLastEditedByOk() (*CompositionLastEditedBy, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastEditedBy.Get(), o.LastEditedBy.IsSet()
+}
+
+// HasLastEditedBy returns a boolean if a field has been set.
+func (o *Composition) HasLastEditedBy() bool {
+	if o != nil && o.LastEditedBy.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastEditedBy gets a reference to the given NullableCompositionLastEditedBy and assigns it to the LastEditedBy field.
+func (o *Composition) SetLastEditedBy(v CompositionLastEditedBy) {
+	o.LastEditedBy.Set(&v)
+}
+// SetLastEditedByNil sets the value for LastEditedBy to be an explicit nil
+func (o *Composition) SetLastEditedByNil() {
+	o.LastEditedBy.Set(nil)
+}
+
+// UnsetLastEditedBy ensures that no value is present for LastEditedBy, not even an explicit nil
+func (o *Composition) UnsetLastEditedBy() {
+	o.LastEditedBy.Unset()
+}
+
+// GetLastEditedAt returns the LastEditedAt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Composition) GetLastEditedAt() time.Time {
+	if o == nil || IsNil(o.LastEditedAt.Get()) {
+		var ret time.Time
+		return ret
+	}
+	return *o.LastEditedAt.Get()
+}
+
+// GetLastEditedAtOk returns a tuple with the LastEditedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Composition) GetLastEditedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.LastEditedAt.Get(), o.LastEditedAt.IsSet()
+}
+
+// HasLastEditedAt returns a boolean if a field has been set.
+func (o *Composition) HasLastEditedAt() bool {
+	if o != nil && o.LastEditedAt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetLastEditedAt gets a reference to the given NullableTime and assigns it to the LastEditedAt field.
+func (o *Composition) SetLastEditedAt(v time.Time) {
+	o.LastEditedAt.Set(&v)
+}
+// SetLastEditedAtNil sets the value for LastEditedAt to be an explicit nil
+func (o *Composition) SetLastEditedAtNil() {
+	o.LastEditedAt.Set(nil)
+}
+
+// UnsetLastEditedAt ensures that no value is present for LastEditedAt, not even an explicit nil
+func (o *Composition) UnsetLastEditedAt() {
+	o.LastEditedAt.Unset()
+}
+
 func (o Composition) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -555,6 +642,12 @@ func (o Composition) ToMap() (map[string]interface{}, error) {
 	}
 	if o.Direct.IsSet() {
 		toSerialize["direct"] = o.Direct.Get()
+	}
+	if o.LastEditedBy.IsSet() {
+		toSerialize["lastEditedBy"] = o.LastEditedBy.Get()
+	}
+	if o.LastEditedAt.IsSet() {
+		toSerialize["lastEditedAt"] = o.LastEditedAt.Get()
 	}
 	return toSerialize, nil
 }

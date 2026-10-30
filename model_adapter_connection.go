@@ -36,6 +36,12 @@ type AdapterConnection struct {
 	Connected bool `json:"connected"`
 	// When the key was last set. Null when it is not connected
 	UpdatedAt NullableTime `json:"updatedAt"`
+	// How this credential is proved before it is used. `email_code` means it is an email address: saving it emails a code to it, and it is used only after the code is given back (`confirmUserAdapterConnection`, `confirmPartnerAdapterConnection`). Null for a credential that is used as soon as it is saved
+	Confirmation NullableString `json:"confirmation"`
+	// True when the credential is connected but has not been confirmed yet, so no adapter uses it. Always false when `confirmation` is null or the credential is not connected
+	AwaitingConfirmation bool `json:"awaitingConfirmation"`
+	// When the credential was confirmed. Null when it is not connected, is awaiting its code, or needs no confirmation
+	ConfirmedAt NullableTime `json:"confirmedAt"`
 }
 
 type _AdapterConnection AdapterConnection
@@ -44,7 +50,7 @@ type _AdapterConnection AdapterConnection
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAdapterConnection(adapterId string, adapterLabel string, credentialKey string, label string, scope string, connected bool, updatedAt NullableTime) *AdapterConnection {
+func NewAdapterConnection(adapterId string, adapterLabel string, credentialKey string, label string, scope string, connected bool, updatedAt NullableTime, confirmation NullableString, awaitingConfirmation bool, confirmedAt NullableTime) *AdapterConnection {
 	this := AdapterConnection{}
 	this.AdapterId = adapterId
 	this.AdapterLabel = adapterLabel
@@ -53,6 +59,9 @@ func NewAdapterConnection(adapterId string, adapterLabel string, credentialKey s
 	this.Scope = scope
 	this.Connected = connected
 	this.UpdatedAt = updatedAt
+	this.Confirmation = confirmation
+	this.AwaitingConfirmation = awaitingConfirmation
+	this.ConfirmedAt = confirmedAt
 	return &this
 }
 
@@ -234,6 +243,82 @@ func (o *AdapterConnection) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt.Set(&v)
 }
 
+// GetConfirmation returns the Confirmation field value
+// If the value is explicit nil, the zero value for string will be returned
+func (o *AdapterConnection) GetConfirmation() string {
+	if o == nil || o.Confirmation.Get() == nil {
+		var ret string
+		return ret
+	}
+
+	return *o.Confirmation.Get()
+}
+
+// GetConfirmationOk returns a tuple with the Confirmation field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AdapterConnection) GetConfirmationOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Confirmation.Get(), o.Confirmation.IsSet()
+}
+
+// SetConfirmation sets field value
+func (o *AdapterConnection) SetConfirmation(v string) {
+	o.Confirmation.Set(&v)
+}
+
+// GetAwaitingConfirmation returns the AwaitingConfirmation field value
+func (o *AdapterConnection) GetAwaitingConfirmation() bool {
+	if o == nil {
+		var ret bool
+		return ret
+	}
+
+	return o.AwaitingConfirmation
+}
+
+// GetAwaitingConfirmationOk returns a tuple with the AwaitingConfirmation field value
+// and a boolean to check if the value has been set.
+func (o *AdapterConnection) GetAwaitingConfirmationOk() (*bool, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.AwaitingConfirmation, true
+}
+
+// SetAwaitingConfirmation sets field value
+func (o *AdapterConnection) SetAwaitingConfirmation(v bool) {
+	o.AwaitingConfirmation = v
+}
+
+// GetConfirmedAt returns the ConfirmedAt field value
+// If the value is explicit nil, the zero value for time.Time will be returned
+func (o *AdapterConnection) GetConfirmedAt() time.Time {
+	if o == nil || o.ConfirmedAt.Get() == nil {
+		var ret time.Time
+		return ret
+	}
+
+	return *o.ConfirmedAt.Get()
+}
+
+// GetConfirmedAtOk returns a tuple with the ConfirmedAt field value
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AdapterConnection) GetConfirmedAtOk() (*time.Time, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ConfirmedAt.Get(), o.ConfirmedAt.IsSet()
+}
+
+// SetConfirmedAt sets field value
+func (o *AdapterConnection) SetConfirmedAt(v time.Time) {
+	o.ConfirmedAt.Set(&v)
+}
+
 func (o AdapterConnection) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -251,6 +336,9 @@ func (o AdapterConnection) ToMap() (map[string]interface{}, error) {
 	toSerialize["scope"] = o.Scope
 	toSerialize["connected"] = o.Connected
 	toSerialize["updatedAt"] = o.UpdatedAt.Get()
+	toSerialize["confirmation"] = o.Confirmation.Get()
+	toSerialize["awaitingConfirmation"] = o.AwaitingConfirmation
+	toSerialize["confirmedAt"] = o.ConfirmedAt.Get()
 	return toSerialize, nil
 }
 
@@ -266,6 +354,9 @@ func (o *AdapterConnection) UnmarshalJSON(data []byte) (err error) {
 		"scope",
 		"connected",
 		"updatedAt",
+		"confirmation",
+		"awaitingConfirmation",
+		"confirmedAt",
 	}
 
 	allProperties := make(map[string]interface{})

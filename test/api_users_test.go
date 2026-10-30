@@ -36,6 +36,22 @@ func Test_widgetic_UsersAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test UsersAPIService ConfirmUserAdapterConnection", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var userId string
+		var adapterId string
+		var credentialKey string
+
+		resp, httpRes, err := apiClient.UsersAPI.ConfirmUserAdapterConnection_0(context.Background(), userId, adapterId, credentialKey).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test UsersAPIService CreateUserApiKey", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

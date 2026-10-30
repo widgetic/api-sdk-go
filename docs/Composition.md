@@ -19,6 +19,8 @@ Name | Type | Description | Notes
 **ProjectId** | Pointer to **string** | ID of the project this composition belongs to | [optional] 
 **ManagedUserId** | Pointer to **NullableString** | The managed user the composition was made for, or null when it is your own. List one managed user&#39;s compositions with the &#x60;managedUserId&#x60; or &#x60;managedUserExternalId&#x60; query parameter of &#x60;getAllCompositions&#x60;. | [optional] 
 **Direct** | Pointer to **NullableBool** | Whether the widget the composition is made from is drawn straight into the page, without a frame (&#x60;true&#x60;), or inside a frame (&#x60;false&#x60;). &#x60;null&#x60; when the widget has no published version yet. It is a fact about the widget&#39;s published version, so every composition of one widget answers the same, and it changes when you publish another version. It cannot be set. Only &#x60;getCompositionById&#x60; returns it: the other calls that return a composition leave it out, and so does that one on the rare occasion the answer could not be worked out just then (ask again).  | [optional] 
+**LastEditedBy** | Pointer to [**NullableCompositionLastEditedBy**](CompositionLastEditedBy.md) |  | [optional] 
+**LastEditedAt** | Pointer to **NullableTime** | When that latest change was made. Present whenever &#x60;lastEditedBy&#x60; is. | [optional] 
 
 ## Methods
 
@@ -394,6 +396,76 @@ HasDirect returns a boolean if a field has been set.
 `func (o *Composition) UnsetDirect()`
 
 UnsetDirect ensures that no value is present for Direct, not even an explicit nil
+### GetLastEditedBy
+
+`func (o *Composition) GetLastEditedBy() CompositionLastEditedBy`
+
+GetLastEditedBy returns the LastEditedBy field if non-nil, zero value otherwise.
+
+### GetLastEditedByOk
+
+`func (o *Composition) GetLastEditedByOk() (*CompositionLastEditedBy, bool)`
+
+GetLastEditedByOk returns a tuple with the LastEditedBy field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastEditedBy
+
+`func (o *Composition) SetLastEditedBy(v CompositionLastEditedBy)`
+
+SetLastEditedBy sets LastEditedBy field to given value.
+
+### HasLastEditedBy
+
+`func (o *Composition) HasLastEditedBy() bool`
+
+HasLastEditedBy returns a boolean if a field has been set.
+
+### SetLastEditedByNil
+
+`func (o *Composition) SetLastEditedByNil(b bool)`
+
+ SetLastEditedByNil sets the value for LastEditedBy to be an explicit nil
+
+### UnsetLastEditedBy
+`func (o *Composition) UnsetLastEditedBy()`
+
+UnsetLastEditedBy ensures that no value is present for LastEditedBy, not even an explicit nil
+### GetLastEditedAt
+
+`func (o *Composition) GetLastEditedAt() time.Time`
+
+GetLastEditedAt returns the LastEditedAt field if non-nil, zero value otherwise.
+
+### GetLastEditedAtOk
+
+`func (o *Composition) GetLastEditedAtOk() (*time.Time, bool)`
+
+GetLastEditedAtOk returns a tuple with the LastEditedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLastEditedAt
+
+`func (o *Composition) SetLastEditedAt(v time.Time)`
+
+SetLastEditedAt sets LastEditedAt field to given value.
+
+### HasLastEditedAt
+
+`func (o *Composition) HasLastEditedAt() bool`
+
+HasLastEditedAt returns a boolean if a field has been set.
+
+### SetLastEditedAtNil
+
+`func (o *Composition) SetLastEditedAtNil(b bool)`
+
+ SetLastEditedAtNil sets the value for LastEditedAt to be an explicit nil
+
+### UnsetLastEditedAt
+`func (o *Composition) UnsetLastEditedAt()`
+
+UnsetLastEditedAt ensures that no value is present for LastEditedAt, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

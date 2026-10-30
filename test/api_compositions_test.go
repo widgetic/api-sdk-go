@@ -36,6 +36,20 @@ func Test_widgetic_CompositionsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test CompositionsAPIService AddAiAnswersKnowledgeFile", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id string
+
+		resp, httpRes, err := apiClient.CompositionsAPI.AddAiAnswersKnowledgeFile_0(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test CompositionsAPIService CheckCompositionAccess", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

@@ -36,6 +36,20 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PartnerAPIService AddAiAnswersKnowledgeFile", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var id string
+
+		resp, httpRes, err := apiClient.PartnerAPI.AddAiAnswersKnowledgeFile(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnerAPIService AddPersonalWorkspaceDomain", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -43,6 +57,21 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 		var id string
 
 		resp, httpRes, err := apiClient.PartnerAPI.AddPersonalWorkspaceDomain(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService ArchiveWorkspaceWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.ArchiveWorkspaceWorkflow(context.Background(), workspaceId, workflowId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -73,6 +102,38 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 		var id string
 
 		resp, httpRes, err := apiClient.PartnerAPI.CheckCompositionAccess(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService ConfirmPartnerAdapterConnection", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var partnerId string
+		var adapterId string
+		var credentialKey string
+
+		resp, httpRes, err := apiClient.PartnerAPI.ConfirmPartnerAdapterConnection(context.Background(), partnerId, adapterId, credentialKey).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService ConfirmUserAdapterConnection", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var userId string
+		var adapterId string
+		var credentialKey string
+
+		resp, httpRes, err := apiClient.PartnerAPI.ConfirmUserAdapterConnection(context.Background(), userId, adapterId, credentialKey).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -259,6 +320,60 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PartnerAPIService CreateWorkspaceWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.CreateWorkspaceWorkflow(context.Background(), workspaceId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService CreateWorkspaceWorkflowFromPreset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.CreateWorkspaceWorkflowFromPreset(context.Background(), workspaceId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService DeleteBrandKit", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PartnerAPI.DeleteBrandKit(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService DeleteBrandKitAsset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var assetId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.DeleteBrandKitAsset(context.Background(), assetId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnerAPIService DeleteCanvas", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -391,6 +506,21 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PartnerAPIService DeleteWorkspaceWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.DeleteWorkspaceWorkflow(context.Background(), workspaceId, workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnerAPIService DescribeCompositionEntries", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -405,6 +535,21 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PartnerAPIService DiscardWorkspaceWorkflowChanges", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.DiscardWorkspaceWorkflowChanges(context.Background(), workspaceId, workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnerAPIService DuplicateComposition", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -412,6 +557,21 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 		var id string
 
 		resp, httpRes, err := apiClient.PartnerAPI.DuplicateComposition(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService DuplicateWorkspaceWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.DuplicateWorkspaceWorkflow(context.Background(), workspaceId, workflowId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -477,6 +637,18 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PartnerAPI.GetAllManagedUsers(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService GetBrandKit", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PartnerAPI.GetBrandKit(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1071,6 +1243,49 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PartnerAPIService GetPublicWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.GetPublicWorkflow(context.Background(), workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService GetPublicWorkflowFrame", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.GetPublicWorkflowFrame(context.Background(), workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService GetPublicWorkflowVersion", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workflowId string
+		var versionId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.GetPublicWorkflowVersion(context.Background(), workflowId, versionId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnerAPIService GetUserAdapterConnections", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -1166,6 +1381,52 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PartnerAPIService GetWorkspaceWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.GetWorkspaceWorkflow(context.Background(), workspaceId, workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService GetWorkspaceWorkflowStats", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.GetWorkspaceWorkflowStats(context.Background(), workspaceId, workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService GetWorkspaceWorkflowVersion", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+		var versionId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.GetWorkspaceWorkflowVersion(context.Background(), workspaceId, workflowId, versionId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnerAPIService ListCompositionEntryItems", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -1237,6 +1498,77 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PartnerAPIService ListPartnerWorkflowPresets", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var partnerId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.ListPartnerWorkflowPresets(context.Background(), partnerId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService ListWorkspaceWorkflowCompositionOptions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.ListWorkspaceWorkflowCompositionOptions(context.Background(), workspaceId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService ListWorkspaceWorkflowPresets", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.ListWorkspaceWorkflowPresets(context.Background(), workspaceId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService ListWorkspaceWorkflowVersions", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.ListWorkspaceWorkflowVersions(context.Background(), workspaceId, workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService ListWorkspaceWorkflows", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.ListWorkspaceWorkflows(context.Background(), workspaceId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnerAPIService OperationsIdGet", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -1244,6 +1576,32 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 		var id string
 
 		resp, httpRes, err := apiClient.PartnerAPI.OperationsIdGet(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService PatchBrandKit", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PartnerAPI.PatchBrandKit(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService PatchBrandKitAsset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var assetId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.PatchBrandKitAsset(context.Background(), assetId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1267,11 +1625,77 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PartnerAPIService PauseWorkspaceWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.PauseWorkspaceWorkflow(context.Background(), workspaceId, workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService PostBrandKitFont", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PartnerAPI.PostBrandKitFont(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService PostBrandKitIcon", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PartnerAPI.PostBrandKitIcon(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnerAPIService PostPublicCompositionEmbedStatus", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.PartnerAPI.PostPublicCompositionEmbedStatus(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService PublishWorkspaceWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.PublishWorkspaceWorkflow(context.Background(), workspaceId, workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService PutBrandKit", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.PartnerAPI.PutBrandKit(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1368,6 +1792,21 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PartnerAPIService RemovePartnerWorkflowPreset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var partnerId string
+		var key string
+
+		resp, httpRes, err := apiClient.PartnerAPI.RemovePartnerWorkflowPreset(context.Background(), partnerId, key).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnerAPIService RemoveUserAdapterConnection", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -1392,6 +1831,51 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 		var deliveryId string
 
 		resp, httpRes, err := apiClient.PartnerAPI.ReplayPartnerNotificationDelivery(context.Background(), partnerId, deliveryId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService ReportPublicWorkflowEvents", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.ReportPublicWorkflowEvents(context.Background(), workflowId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService RestoreWorkspaceWorkflowVersion", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+		var versionId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.RestoreWorkspaceWorkflowVersion(context.Background(), workspaceId, workflowId, versionId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService ResumeWorkspaceWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.ResumeWorkspaceWorkflow(context.Background(), workspaceId, workflowId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1449,6 +1933,21 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 		var partnerId string
 
 		resp, httpRes, err := apiClient.PartnerAPI.RotatePartnerWebhookSecret(context.Background(), partnerId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService SaveWorkspaceWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.SaveWorkspaceWorkflow(context.Background(), workspaceId, workflowId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -1599,6 +2098,21 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test PartnerAPIService SetPartnerWorkflowPreset", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var partnerId string
+		var key string
+
+		resp, httpRes, err := apiClient.PartnerAPI.SetPartnerWorkflowPreset(context.Background(), partnerId, key).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test PartnerAPIService SetUserAdapterConnection", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -1608,6 +2122,21 @@ func Test_widgetic_PartnerAPIService(t *testing.T) {
 		var credentialKey string
 
 		resp, httpRes, err := apiClient.PartnerAPI.SetUserAdapterConnection(context.Background(), userId, adapterId, credentialKey).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test PartnerAPIService UnarchiveWorkspaceWorkflow", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var workspaceId string
+		var workflowId string
+
+		resp, httpRes, err := apiClient.PartnerAPI.UnarchiveWorkspaceWorkflow(context.Background(), workspaceId, workflowId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

@@ -35,6 +35,14 @@
 
 * `ENTRY_CREATED` (value: `"entry.created"`)
 
+* `WORKFLOW_CREATED` (value: `"workflow.created"`)
+
+* `WORKFLOW_PUBLISHED` (value: `"workflow.published"`)
+
+* `WORKFLOW_STATE_CHANGED` (value: `"workflow.state_changed"`)
+
+* `WORKFLOW_DELETED` (value: `"workflow.deleted"`)
+
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

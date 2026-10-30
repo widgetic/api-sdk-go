@@ -49,6 +49,8 @@ type APIClient struct {
 
 	// API Services
 
+	BrandKitAPI *BrandKitAPIService
+
 	CanvasesAPI *CanvasesAPIService
 
 	CompositionsAPI *CompositionsAPIService
@@ -76,6 +78,10 @@ type APIClient struct {
 	UsersAPI *UsersAPIService
 
 	WidgetsAPI *WidgetsAPIService
+
+	WorkflowsAPI *WorkflowsAPIService
+
+	WorkspacesAPI *WorkspacesAPIService
 }
 
 type service struct {
@@ -94,6 +100,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.BrandKitAPI = (*BrandKitAPIService)(&c.common)
 	c.CanvasesAPI = (*CanvasesAPIService)(&c.common)
 	c.CompositionsAPI = (*CompositionsAPIService)(&c.common)
 	c.CreditsAPI = (*CreditsAPIService)(&c.common)
@@ -108,6 +115,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.UploadsAPI = (*UploadsAPIService)(&c.common)
 	c.UsersAPI = (*UsersAPIService)(&c.common)
 	c.WidgetsAPI = (*WidgetsAPIService)(&c.common)
+	c.WorkflowsAPI = (*WorkflowsAPIService)(&c.common)
+	c.WorkspacesAPI = (*WorkspacesAPIService)(&c.common)
 
 	return c
 }

@@ -31,7 +31,7 @@ type UpdateComposition struct {
 	EmbedSettings map[string]interface{} `json:"embedSettings,omitempty"`
 	// Updated design settings
 	Design map[string]interface{} `json:"design,omitempty"`
-	// Tables to make for the composition, in the shape `createComposition` takes (`{ \"tables\": [ ... ] }`, with the same names, types, defaults and limits). Only the tables that are missing are made. A table that already exists is never changed or dropped: it keeps its columns, so a column added to the declaration is not added to it. A declaration that cannot be used is refused with `400` and `INVALID_DATABASE_SCHEMA`. When the composition is saved but its tables cannot be made just now, `meta.warnings` says so: send the same `databaseSchema` again to retry. 
+	// Tables to make for the composition, in the shape `createComposition` takes (`{ \"tables\": [ ... ] }`, with the same names, types, defaults and limits). Only the tables that are missing are made. A table that already exists is never changed or dropped: it keeps its columns, so a column added to the declaration is not added to it. (Tables made from the widget's own file are the one exception, brought up to date when the widget is published; see `source` on `createComposition`.) A declaration that cannot be used is refused with `400` and `INVALID_DATABASE_SCHEMA`. When the composition is saved but its tables cannot be made just now, `meta.warnings` says so: send the same `databaseSchema` again to retry. 
 	DatabaseSchema map[string]interface{} `json:"databaseSchema,omitempty"`
 	// Updated project ID
 	ProjectId *string `json:"projectId,omitempty"`

@@ -195,6 +195,234 @@ func (a *UsersAPIService) AddPersonalWorkspaceDomainExecute(r ApiAddPersonalWork
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiConfirmUserAdapterConnection_0Request struct {
+	ctx context.Context
+	ApiService *UsersAPIService
+	userId string
+	adapterId string
+	credentialKey string
+	confirmAdapterConnectionRequest *ConfirmAdapterConnectionRequest
+}
+
+func (r ApiConfirmUserAdapterConnection_0Request) ConfirmAdapterConnectionRequest(confirmAdapterConnectionRequest ConfirmAdapterConnectionRequest) ApiConfirmUserAdapterConnection_0Request {
+	r.confirmAdapterConnectionRequest = &confirmAdapterConnectionRequest
+	return r
+}
+
+func (r ApiConfirmUserAdapterConnection_0Request) Execute() (*SetUserAdapterConnection200Response, *http.Response, error) {
+	return r.ApiService.ConfirmUserAdapterConnectionExecute(r)
+}
+
+/*
+ConfirmUserAdapterConnection_0 Confirm an adapter address with the code that was emailed to it
+
+Some credentials are an email address Widgetic sends a widget's messages to (`confirmation: email_code` in
+`getUserAdapterConnections`). Saving one with `setUserAdapterConnection` emails a six-digit code to it; this gives
+the code back. Only then is the address used: until it is confirmed, the widgets that need it are not charged and
+their visitors are told the feature is unavailable.
+
+The code works for 30 minutes and for five wrong tries. After that, save the address again and a new code is
+emailed (not sooner than a minute after the last one). A code that is not made of digits is refused without
+counting as a try.
+
+Confirming an address that is already confirmed answers 200 with the same state, so a retry of a request that
+went through is harmless. Saving a different address, or the same one before it was confirmed, starts again.
+
+This needs an API key with full access. The caller must be the account itself or a Widgetic administrator.
+
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param userId The account that keeps the address. For your own, your own user id
+ @param adapterId The adapter the address is for
+ @param credentialKey The credential's name within the adapter
+ @return ApiConfirmUserAdapterConnection_0Request
+*/
+func (a *UsersAPIService) ConfirmUserAdapterConnection(ctx context.Context, userId string, adapterId string, credentialKey string) ApiConfirmUserAdapterConnection_0Request {
+	return ApiConfirmUserAdapterConnection_0Request{
+		ApiService: a,
+		ctx: ctx,
+		userId: userId,
+		adapterId: adapterId,
+		credentialKey: credentialKey,
+	}
+}
+
+// Execute executes the request
+//  @return SetUserAdapterConnection200Response
+func (a *UsersAPIService) ConfirmUserAdapterConnectionExecute(r ApiConfirmUserAdapterConnection_0Request) (*SetUserAdapterConnection200Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SetUserAdapterConnection200Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "UsersAPIService.ConfirmUserAdapterConnection")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/users/{userId}/adapter-connections/{adapterId}/{credentialKey}/confirm"
+	localVarPath = strings.Replace(localVarPath, "{"+"userId"+"}", url.PathEscape(parameterValueToString(r.userId, "userId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"adapterId"+"}", url.PathEscape(parameterValueToString(r.adapterId, "adapterId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"credentialKey"+"}", url.PathEscape(parameterValueToString(r.credentialKey, "credentialKey")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if strlen(r.adapterId) > 40 {
+		return localVarReturnValue, nil, reportError("adapterId must have less than 40 elements")
+	}
+	if strlen(r.credentialKey) > 40 {
+		return localVarReturnValue, nil, reportError("credentialKey must have less than 40 elements")
+	}
+	if r.confirmAdapterConnectionRequest == nil {
+		return localVarReturnValue, nil, reportError("confirmAdapterConnectionRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.confirmAdapterConnectionRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 503 {
+			var v ErrorResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiCreateUserApiKey_0Request struct {
 	ctx context.Context
 	ApiService *UsersAPIService
@@ -1469,8 +1697,15 @@ revoke it with the provider.
 for a partner only) and that the text is one line of at most 2048 characters. Whether the provider accepts
 the key is not checked here: it shows the first time a widget uses it, and the widget tells its owner.
 
-A widget whose adapter has no key connected is not charged and does not run that adapter: its visitors are told
-the feature is unavailable, and the owner is told once a day what to connect.
+**An address that has to be confirmed.** Some credentials are not a key but the email address Widgetic sends a
+widget's messages to (`confirmation: email_code` in `getUserAdapterConnections`). Saving one checks that it is one
+email address and emails a six-digit code to it; the answer says `awaitingConfirmation: true`, and nothing is sent
+to the address until the code is given back with `confirmUserAdapterConnection`. Saving the same address again
+before it is confirmed emails a new code (not sooner than a minute after the last); saving the address that is
+already confirmed changes nothing. If the code cannot be emailed, nothing is saved.
+
+A widget whose adapter has no key connected, or whose address is not confirmed yet, is not charged and does not
+run that adapter: its visitors are told the feature is unavailable, and the owner is told once a day what to do.
 
 This needs an API key with full access. The caller must be the account itself or a Widgetic administrator. A
 retry is harmless: saving the same key twice only refreshes when it was set.

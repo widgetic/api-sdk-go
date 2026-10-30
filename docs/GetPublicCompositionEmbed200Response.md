@@ -8,16 +8,19 @@ Name | Type | Description | Notes
 **WidgetId** | Pointer to **string** |  | [optional] 
 **Version** | Pointer to **int32** |  | [optional] 
 **WidgetVersion** | Pointer to **int32** | Published widget version on the CDN artifact this composition uses. | [optional] 
-**PlayerVersion** | Pointer to **int32** | Version of the player: the gateway frame wrapper that shows the widget, and the host bridge it speaks with the embedding page and the widget (currently 4). Raised when the messages between page, frame, and widget change in a way a widget could notice, such as a new &#x60;widgetic:host&#x60; field or a new forwarded event (2 added &#x60;entries&#x60;, 3 added &#x60;adapters&#x60;, 4 added &#x60;entries.writeToken&#x60;). It is not &#x60;widgetVersion&#x60; (the version of the published widget) and not the &#x60;version&#x60; inside a &#x60;widgetic:host&#x60; message. | [optional] 
+**PlayerVersion** | Pointer to **int32** | Version of the player: the gateway frame wrapper that shows the widget, and the host bridge it speaks with the embedding page and the widget (currently 6). Raised when the messages between page, frame, and widget change in a way a widget could notice, such as a new &#x60;widgetic:host&#x60; field or a new forwarded event (2 added &#x60;entries&#x60;, 3 added &#x60;adapters&#x60;, 4 added &#x60;entries.writeToken&#x60;, 5 added the A/B goal: &#x60;widgetic:ab-goal&#x60; to the widget and &#x60;widgetic:goal&#x60; back, 6 added the watch of a workflow: &#x60;widgetic:workflow-watch&#x60; to the widget, the watched values in &#x60;widgetic:submitted&#x60; and the watched action in &#x60;widgetic:goal&#x60;). It is not &#x60;widgetVersion&#x60; (the version of the published widget) and not the &#x60;version&#x60; inside a &#x60;widgetic:host&#x60; message. | [optional] 
 **DataSource** | Pointer to [**NullableGetPublicCompositionEmbed200ResponseDataSource**](GetPublicCompositionEmbed200ResponseDataSource.md) |  | [optional] 
 **EmbedUrl** | Pointer to **string** |  | [optional] 
 **EntryWriteToken** | Pointer to **string** | Signed per-composition write token for &#x60;POST /embed/compositions/{compositionId}/entries/{table}&#x60;, also handed to the widget inside &#x60;widgetic:host&#x60; as &#x60;entries.writeToken&#x60;. | [optional] 
+**Entries** | Pointer to [**GetPublicCompositionEmbed200ResponseEntries**](GetPublicCompositionEmbed200ResponseEntries.md) |  | [optional] 
+**Adapters** | Pointer to [**GetPublicCompositionEmbed200ResponseAdapters**](GetPublicCompositionEmbed200ResponseAdapters.md) |  | [optional] 
 **Width** | Pointer to **int32** |  | [optional] 
 **Height** | Pointer to **int32** |  | [optional] 
 **Design** | Pointer to **map[string]interface{}** |  | [optional] 
 **Content** | Pointer to **map[string]interface{}** |  | [optional] 
 **ContentItems** | Pointer to **[]map[string]interface{}** |  | [optional] 
 **IframeAllow** | Pointer to **string** | The browser features the widget needs the iframe that shows it to be allowed to use, as the value of that iframe&#39;s &#x60;allow&#x60; attribute (for example &#x60;camera; microphone&#x60;; the words are &#x60;camera&#x60;, &#x60;display-capture&#x60; and &#x60;microphone&#x60;). Present only for a widget that uses a module that needs one, and absent for every other widget. A page that embeds the frame itself copies it onto its own iframe (&#x60;allow&#x3D;\&quot;...\&quot;&#x60;); a page that does not leaves the widget to say, in its own words, that the feature is blocked there. The frame wrapper already passes it on to the iframe it holds. | [optional] 
+**Media** | Pointer to [**GetPublicCompositionEmbed200ResponseMedia**](GetPublicCompositionEmbed200ResponseMedia.md) |  | [optional] 
 **Direct** | Pointer to [**NullableGetPublicCompositionEmbed200ResponseDirect**](GetPublicCompositionEmbed200ResponseDirect.md) |  | [optional] 
 
 ## Methods
@@ -249,6 +252,56 @@ SetEntryWriteToken sets EntryWriteToken field to given value.
 
 HasEntryWriteToken returns a boolean if a field has been set.
 
+### GetEntries
+
+`func (o *GetPublicCompositionEmbed200Response) GetEntries() GetPublicCompositionEmbed200ResponseEntries`
+
+GetEntries returns the Entries field if non-nil, zero value otherwise.
+
+### GetEntriesOk
+
+`func (o *GetPublicCompositionEmbed200Response) GetEntriesOk() (*GetPublicCompositionEmbed200ResponseEntries, bool)`
+
+GetEntriesOk returns a tuple with the Entries field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEntries
+
+`func (o *GetPublicCompositionEmbed200Response) SetEntries(v GetPublicCompositionEmbed200ResponseEntries)`
+
+SetEntries sets Entries field to given value.
+
+### HasEntries
+
+`func (o *GetPublicCompositionEmbed200Response) HasEntries() bool`
+
+HasEntries returns a boolean if a field has been set.
+
+### GetAdapters
+
+`func (o *GetPublicCompositionEmbed200Response) GetAdapters() GetPublicCompositionEmbed200ResponseAdapters`
+
+GetAdapters returns the Adapters field if non-nil, zero value otherwise.
+
+### GetAdaptersOk
+
+`func (o *GetPublicCompositionEmbed200Response) GetAdaptersOk() (*GetPublicCompositionEmbed200ResponseAdapters, bool)`
+
+GetAdaptersOk returns a tuple with the Adapters field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAdapters
+
+`func (o *GetPublicCompositionEmbed200Response) SetAdapters(v GetPublicCompositionEmbed200ResponseAdapters)`
+
+SetAdapters sets Adapters field to given value.
+
+### HasAdapters
+
+`func (o *GetPublicCompositionEmbed200Response) HasAdapters() bool`
+
+HasAdapters returns a boolean if a field has been set.
+
 ### GetWidth
 
 `func (o *GetPublicCompositionEmbed200Response) GetWidth() int32`
@@ -398,6 +451,31 @@ SetIframeAllow sets IframeAllow field to given value.
 `func (o *GetPublicCompositionEmbed200Response) HasIframeAllow() bool`
 
 HasIframeAllow returns a boolean if a field has been set.
+
+### GetMedia
+
+`func (o *GetPublicCompositionEmbed200Response) GetMedia() GetPublicCompositionEmbed200ResponseMedia`
+
+GetMedia returns the Media field if non-nil, zero value otherwise.
+
+### GetMediaOk
+
+`func (o *GetPublicCompositionEmbed200Response) GetMediaOk() (*GetPublicCompositionEmbed200ResponseMedia, bool)`
+
+GetMediaOk returns a tuple with the Media field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMedia
+
+`func (o *GetPublicCompositionEmbed200Response) SetMedia(v GetPublicCompositionEmbed200ResponseMedia)`
+
+SetMedia sets Media field to given value.
+
+### HasMedia
+
+`func (o *GetPublicCompositionEmbed200Response) HasMedia() bool`
+
+HasMedia returns a boolean if a field has been set.
 
 ### GetDirect
 

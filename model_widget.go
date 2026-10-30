@@ -52,10 +52,8 @@ type Widget struct {
 	DatabaseId NullableString `json:"databaseId,omitempty"`
 	// Version number of the widget.
 	Version NullableFloat32 `json:"version,omitempty"`
-	// ID linking to the widget's code graph schema.
-	CpgSchemaId NullableString `json:"cpgSchemaId,omitempty"`
-	// Last Git commit SHA analyzed for code graph.
-	LastCpgCommitSha NullableString `json:"lastCpgCommitSha,omitempty"`
+	// Latest Git commit SHA of the widget's code repository.
+	LastCommitSha NullableString `json:"lastCommitSha,omitempty"`
 	// Organization ID if created in an organization workspace.
 	OrganizationId NullableString `json:"organizationId,omitempty"`
 	// Project folder reference for organization widgets.
@@ -665,88 +663,46 @@ func (o *Widget) UnsetVersion() {
 	o.Version.Unset()
 }
 
-// GetCpgSchemaId returns the CpgSchemaId field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Widget) GetCpgSchemaId() string {
-	if o == nil || IsNil(o.CpgSchemaId.Get()) {
+// GetLastCommitSha returns the LastCommitSha field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Widget) GetLastCommitSha() string {
+	if o == nil || IsNil(o.LastCommitSha.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.CpgSchemaId.Get()
+	return *o.LastCommitSha.Get()
 }
 
-// GetCpgSchemaIdOk returns a tuple with the CpgSchemaId field value if set, nil otherwise
+// GetLastCommitShaOk returns a tuple with the LastCommitSha field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Widget) GetCpgSchemaIdOk() (*string, bool) {
+func (o *Widget) GetLastCommitShaOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.CpgSchemaId.Get(), o.CpgSchemaId.IsSet()
+	return o.LastCommitSha.Get(), o.LastCommitSha.IsSet()
 }
 
-// HasCpgSchemaId returns a boolean if a field has been set.
-func (o *Widget) HasCpgSchemaId() bool {
-	if o != nil && o.CpgSchemaId.IsSet() {
+// HasLastCommitSha returns a boolean if a field has been set.
+func (o *Widget) HasLastCommitSha() bool {
+	if o != nil && o.LastCommitSha.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCpgSchemaId gets a reference to the given NullableString and assigns it to the CpgSchemaId field.
-func (o *Widget) SetCpgSchemaId(v string) {
-	o.CpgSchemaId.Set(&v)
+// SetLastCommitSha gets a reference to the given NullableString and assigns it to the LastCommitSha field.
+func (o *Widget) SetLastCommitSha(v string) {
+	o.LastCommitSha.Set(&v)
 }
-// SetCpgSchemaIdNil sets the value for CpgSchemaId to be an explicit nil
-func (o *Widget) SetCpgSchemaIdNil() {
-	o.CpgSchemaId.Set(nil)
-}
-
-// UnsetCpgSchemaId ensures that no value is present for CpgSchemaId, not even an explicit nil
-func (o *Widget) UnsetCpgSchemaId() {
-	o.CpgSchemaId.Unset()
+// SetLastCommitShaNil sets the value for LastCommitSha to be an explicit nil
+func (o *Widget) SetLastCommitShaNil() {
+	o.LastCommitSha.Set(nil)
 }
 
-// GetLastCpgCommitSha returns the LastCpgCommitSha field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *Widget) GetLastCpgCommitSha() string {
-	if o == nil || IsNil(o.LastCpgCommitSha.Get()) {
-		var ret string
-		return ret
-	}
-	return *o.LastCpgCommitSha.Get()
-}
-
-// GetLastCpgCommitShaOk returns a tuple with the LastCpgCommitSha field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *Widget) GetLastCpgCommitShaOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return o.LastCpgCommitSha.Get(), o.LastCpgCommitSha.IsSet()
-}
-
-// HasLastCpgCommitSha returns a boolean if a field has been set.
-func (o *Widget) HasLastCpgCommitSha() bool {
-	if o != nil && o.LastCpgCommitSha.IsSet() {
-		return true
-	}
-
-	return false
-}
-
-// SetLastCpgCommitSha gets a reference to the given NullableString and assigns it to the LastCpgCommitSha field.
-func (o *Widget) SetLastCpgCommitSha(v string) {
-	o.LastCpgCommitSha.Set(&v)
-}
-// SetLastCpgCommitShaNil sets the value for LastCpgCommitSha to be an explicit nil
-func (o *Widget) SetLastCpgCommitShaNil() {
-	o.LastCpgCommitSha.Set(nil)
-}
-
-// UnsetLastCpgCommitSha ensures that no value is present for LastCpgCommitSha, not even an explicit nil
-func (o *Widget) UnsetLastCpgCommitSha() {
-	o.LastCpgCommitSha.Unset()
+// UnsetLastCommitSha ensures that no value is present for LastCommitSha, not even an explicit nil
+func (o *Widget) UnsetLastCommitSha() {
+	o.LastCommitSha.Unset()
 }
 
 // GetOrganizationId returns the OrganizationId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -975,11 +931,8 @@ func (o Widget) ToMap() (map[string]interface{}, error) {
 	if o.Version.IsSet() {
 		toSerialize["version"] = o.Version.Get()
 	}
-	if o.CpgSchemaId.IsSet() {
-		toSerialize["cpgSchemaId"] = o.CpgSchemaId.Get()
-	}
-	if o.LastCpgCommitSha.IsSet() {
-		toSerialize["lastCpgCommitSha"] = o.LastCpgCommitSha.Get()
+	if o.LastCommitSha.IsSet() {
+		toSerialize["lastCommitSha"] = o.LastCommitSha.Get()
 	}
 	if o.OrganizationId.IsSet() {
 		toSerialize["organizationId"] = o.OrganizationId.Get()

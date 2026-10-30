@@ -4,6 +4,7 @@ All URIs are relative to *https://api.widgetic.com/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**ConfirmPartnerAdapterConnection_0**](PartnersAPI.md#ConfirmPartnerAdapterConnection_0) | **Post** /partners/{partnerId}/adapter-connections/{adapterId}/{credentialKey}/confirm | Confirm a partner&#39;s adapter address with the code that was emailed to it
 [**CreatePartnerExtraCreditsInvoice_0**](PartnersAPI.md#CreatePartnerExtraCreditsInvoice_0) | **Post** /partners/{partnerId}/credits/extra-invoice | Buy extra credits for a partner
 [**GetMyPartners_0**](PartnersAPI.md#GetMyPartners_0) | **Get** /partners/mine | Find the partner you administer
 [**GetPartnerAdapterConnections_0**](PartnersAPI.md#GetPartnerAdapterConnections_0) | **Get** /partners/{partnerId}/adapter-connections | See which adapter keys a partner has connected
@@ -24,10 +25,12 @@ Method | HTTP request | Description
 [**ListPartnerNotificationDeliveries_0**](PartnersAPI.md#ListPartnerNotificationDeliveries_0) | **Get** /partners/{partnerId}/notifications/deliveries | How your notifications reached you
 [**ListPartnerNotifications_0**](PartnersAPI.md#ListPartnerNotifications_0) | **Get** /partners/{partnerId}/notifications | What your partner account was told
 [**ListPartnerPresets_0**](PartnersAPI.md#ListPartnerPresets_0) | **Get** /partners/{partnerId}/presets | List the widgets a partner offers as presets
+[**ListPartnerWorkflowPresets_0**](PartnersAPI.md#ListPartnerWorkflowPresets_0) | **Get** /partners/{partnerId}/workflow-presets | List the workflows a partner offers as places to start
 [**RemovePartnerAdapterConnection_0**](PartnersAPI.md#RemovePartnerAdapterConnection_0) | **Delete** /partners/{partnerId}/adapter-connections/{adapterId}/{credentialKey} | Remove an adapter key from a partner
 [**RemovePartnerDataDatabase_0**](PartnersAPI.md#RemovePartnerDataDatabase_0) | **Delete** /partners/{partnerId}/data-database | Stop keeping the data of a partner&#39;s compositions in its own database
 [**RemovePartnerPreset_0**](PartnersAPI.md#RemovePartnerPreset_0) | **Delete** /partners/{partnerId}/presets/{key} | Take a widget off the partner&#39;s presets
 [**RemovePartnerStorageDestination_0**](PartnersAPI.md#RemovePartnerStorageDestination_0) | **Delete** /partners/{partnerId}/storage | Stop storing a partner&#39;s uploaded files in its own bucket
+[**RemovePartnerWorkflowPreset_0**](PartnersAPI.md#RemovePartnerWorkflowPreset_0) | **Delete** /partners/{partnerId}/workflow-presets/{key} | Stop offering a workflow as a place to start
 [**ReplayPartnerNotificationDelivery_0**](PartnersAPI.md#ReplayPartnerNotificationDelivery_0) | **Post** /partners/{partnerId}/notifications/deliveries/{deliveryId}/replay | Send a webhook delivery again
 [**RotatePartnerEntryContextSecret_0**](PartnersAPI.md#RotatePartnerEntryContextSecret_0) | **Post** /partners/{partnerId}/entry-context-signing/secret | Make a secret to sign the context of your embeds
 [**RotatePartnerWebhookSecret_0**](PartnersAPI.md#RotatePartnerWebhookSecret_0) | **Post** /partners/{partnerId}/notifications/webhook-secret | Make a new secret for your webhook
@@ -37,11 +40,90 @@ Method | HTTP request | Description
 [**SetPartnerDesignDefaults_0**](PartnersAPI.md#SetPartnerDesignDefaults_0) | **Put** /partners/{partnerId}/design-defaults | Set or clear partner-wide design defaults
 [**SetPartnerPreset_0**](PartnersAPI.md#SetPartnerPreset_0) | **Put** /partners/{partnerId}/presets/{key} | Make a widget a preset, or replace a preset
 [**SetPartnerStorageDestination_0**](PartnersAPI.md#SetPartnerStorageDestination_0) | **Put** /partners/{partnerId}/storage | Set where a partner&#39;s uploaded files are stored
+[**SetPartnerWorkflowPreset_0**](PartnersAPI.md#SetPartnerWorkflowPreset_0) | **Put** /partners/{partnerId}/workflow-presets/{key} | Offer a workflow as a place to start, or replace what a key offers
 [**UpdatePartnerEntryContextSigning_0**](PartnersAPI.md#UpdatePartnerEntryContextSigning_0) | **Put** /partners/{partnerId}/entry-context-signing | Require a signed context, or stop requiring it
 [**UpdatePartnerNotificationSettings_0**](PartnersAPI.md#UpdatePartnerNotificationSettings_0) | **Put** /partners/{partnerId}/notifications/settings | Choose where your notifications go
 [**VerifyPartnerDataDatabase_0**](PartnersAPI.md#VerifyPartnerDataDatabase_0) | **Post** /partners/{partnerId}/data-database/verify | Check that a partner&#39;s own database still works
 [**VerifyPartnerStorageDestination_0**](PartnersAPI.md#VerifyPartnerStorageDestination_0) | **Post** /partners/{partnerId}/storage/verify | Check that a partner&#39;s storage destination still works
 
+
+
+## ConfirmPartnerAdapterConnection_0
+
+> SetUserAdapterConnection200Response ConfirmPartnerAdapterConnection_0(ctx, partnerId, adapterId, credentialKey).ConfirmAdapterConnectionRequest(confirmAdapterConnectionRequest).Execute()
+
+Confirm a partner's adapter address with the code that was emailed to it
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/widgetic/api-sdk-go"
+)
+
+func main() {
+	partnerId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | The partner that keeps the address
+	adapterId := "adapterId_example" // string | The adapter the address is for
+	credentialKey := "credentialKey_example" // string | The credential's name within the adapter
+	confirmAdapterConnectionRequest := *openapiclient.NewConfirmAdapterConnectionRequest("123456") // ConfirmAdapterConnectionRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.PartnersAPI.ConfirmPartnerAdapterConnection_0(context.Background(), partnerId, adapterId, credentialKey).ConfirmAdapterConnectionRequest(confirmAdapterConnectionRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PartnersAPI.ConfirmPartnerAdapterConnection_0``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ConfirmPartnerAdapterConnection_0`: SetUserAdapterConnection200Response
+	fmt.Fprintf(os.Stdout, "Response from `PartnersAPI.ConfirmPartnerAdapterConnection_0`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**partnerId** | **string** | The partner that keeps the address | 
+**adapterId** | **string** | The adapter the address is for | 
+**credentialKey** | **string** | The credential&#39;s name within the adapter | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiConfirmPartnerAdapterConnectionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+ **confirmAdapterConnectionRequest** | [**ConfirmAdapterConnectionRequest**](ConfirmAdapterConnectionRequest.md) |  | 
+
+### Return type
+
+[**SetUserAdapterConnection200Response**](SetUserAdapterConnection200Response.md)
+
+### Authorization
+
+[apiKeyAuth](../README.md#apiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreatePartnerExtraCreditsInvoice_0
@@ -1488,6 +1570,76 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListPartnerWorkflowPresets_0
+
+> ListPartnerWorkflowPresets200Response ListPartnerWorkflowPresets_0(ctx, partnerId).Execute()
+
+List the workflows a partner offers as places to start
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/widgetic/api-sdk-go"
+)
+
+func main() {
+	partnerId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | The partner whose starting points to list
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.PartnersAPI.ListPartnerWorkflowPresets_0(context.Background(), partnerId).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PartnersAPI.ListPartnerWorkflowPresets_0``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListPartnerWorkflowPresets_0`: ListPartnerWorkflowPresets200Response
+	fmt.Fprintf(os.Stdout, "Response from `PartnersAPI.ListPartnerWorkflowPresets_0`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**partnerId** | **string** | The partner whose starting points to list | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListPartnerWorkflowPresetsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+### Return type
+
+[**ListPartnerWorkflowPresets200Response**](ListPartnerWorkflowPresets200Response.md)
+
+### Authorization
+
+[apiKeyAuth](../README.md#apiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## RemovePartnerAdapterConnection_0
 
 > RemoveUserAdapterConnection200Response RemovePartnerAdapterConnection_0(ctx, partnerId, adapterId, credentialKey).Execute()
@@ -1762,6 +1914,79 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PartnerStorageRemovalResponse**](PartnerStorageRemovalResponse.md)
+
+### Authorization
+
+[apiKeyAuth](../README.md#apiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RemovePartnerWorkflowPreset_0
+
+> RemovePartnerWorkflowPreset200Response RemovePartnerWorkflowPreset_0(ctx, partnerId, key).Execute()
+
+Stop offering a workflow as a place to start
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/widgetic/api-sdk-go"
+)
+
+func main() {
+	partnerId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | The partner whose starting point to remove
+	key := "key_example" // string | The key of the starting point to remove
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.PartnersAPI.RemovePartnerWorkflowPreset_0(context.Background(), partnerId, key).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PartnersAPI.RemovePartnerWorkflowPreset_0``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `RemovePartnerWorkflowPreset_0`: RemovePartnerWorkflowPreset200Response
+	fmt.Fprintf(os.Stdout, "Response from `PartnersAPI.RemovePartnerWorkflowPreset_0`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**partnerId** | **string** | The partner whose starting point to remove | 
+**key** | **string** | The key of the starting point to remove | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiRemovePartnerWorkflowPresetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+### Return type
+
+[**RemovePartnerWorkflowPreset200Response**](RemovePartnerWorkflowPreset200Response.md)
 
 ### Authorization
 
@@ -2424,6 +2649,81 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PartnerStorageDestinationResponse**](PartnerStorageDestinationResponse.md)
+
+### Authorization
+
+[apiKeyAuth](../README.md#apiKeyAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## SetPartnerWorkflowPreset_0
+
+> SetPartnerWorkflowPreset200Response SetPartnerWorkflowPreset_0(ctx, partnerId, key).OfferWorkflowPresetRequest(offerWorkflowPresetRequest).Execute()
+
+Offer a workflow as a place to start, or replace what a key offers
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/widgetic/api-sdk-go"
+)
+
+func main() {
+	partnerId := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | The partner whose starting point to set
+	key := "key_example" // string | The name your code and the picker use for the starting point
+	offerWorkflowPresetRequest := *openapiclient.NewOfferWorkflowPresetRequest("WorkflowId_example") // OfferWorkflowPresetRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.PartnersAPI.SetPartnerWorkflowPreset_0(context.Background(), partnerId, key).OfferWorkflowPresetRequest(offerWorkflowPresetRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `PartnersAPI.SetPartnerWorkflowPreset_0``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `SetPartnerWorkflowPreset_0`: SetPartnerWorkflowPreset200Response
+	fmt.Fprintf(os.Stdout, "Response from `PartnersAPI.SetPartnerWorkflowPreset_0`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**partnerId** | **string** | The partner whose starting point to set | 
+**key** | **string** | The name your code and the picker use for the starting point | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiSetPartnerWorkflowPresetRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **offerWorkflowPresetRequest** | [**OfferWorkflowPresetRequest**](OfferWorkflowPresetRequest.md) |  | 
+
+### Return type
+
+[**SetPartnerWorkflowPreset200Response**](SetPartnerWorkflowPreset200Response.md)
 
 ### Authorization
 

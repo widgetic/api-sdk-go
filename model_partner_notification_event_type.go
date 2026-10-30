@@ -36,6 +36,10 @@ const (
 	WIDGET_PUBLISHED PartnerNotificationEventType = "widget.published"
 	UPLOAD_CREATED PartnerNotificationEventType = "upload.created"
 	ENTRY_CREATED PartnerNotificationEventType = "entry.created"
+	WORKFLOW_CREATED PartnerNotificationEventType = "workflow.created"
+	WORKFLOW_PUBLISHED PartnerNotificationEventType = "workflow.published"
+	WORKFLOW_STATE_CHANGED PartnerNotificationEventType = "workflow.state_changed"
+	WORKFLOW_DELETED PartnerNotificationEventType = "workflow.deleted"
 )
 
 // All allowed values of PartnerNotificationEventType enum
@@ -56,6 +60,10 @@ var AllowedPartnerNotificationEventTypeEnumValues = []PartnerNotificationEventTy
 	"widget.published",
 	"upload.created",
 	"entry.created",
+	"workflow.created",
+	"workflow.published",
+	"workflow.state_changed",
+	"workflow.deleted",
 }
 
 func (v *PartnerNotificationEventType) UnmarshalJSON(src []byte) error {
